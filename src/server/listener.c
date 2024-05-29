@@ -53,6 +53,7 @@ int sendNotify() {
     return 0;
 }
 
+
 int parse_option(const char buffer[1024]) {
     if(strcmp(buffer, "1999beep") == 0)
         return systemBeep();
@@ -60,4 +61,6 @@ int parse_option(const char buffer[1024]) {
         return runShell();
     else if(strcmp(buffer, "1999notify") == 0)
         return sendNotify();
+
+    return -1;
 }
