@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "strings.h": "c",
+        "socket.h": "c",
+        "stdio.h": "c",
+        "utsname.h": "c",
+        "in.h": "c",
+        "loop.h": "c",
+        "slog.h": "c",
+        "listener.h": "c",
+        "server.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
