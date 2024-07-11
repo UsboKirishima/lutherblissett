@@ -15,4 +15,5 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Luther Blissed.  If not, see <http://www.gnu.org/licenses/>.
  */
+void *handle_client(void *arg);
 int lb_server(char HOST[], unsigned short PORT);

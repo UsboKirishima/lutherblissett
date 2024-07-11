@@ -8,7 +8,9 @@
         "loop.h": "c",
         "slog.h": "c",
         "listener.h": "c",
-        "server.h": "c"
+        "server.h": "c",
+        "statvfs.h": "c",
+        "fcntl.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
