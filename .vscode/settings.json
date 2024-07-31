@@ -10,7 +10,9 @@
         "listener.h": "c",
         "server.h": "c",
         "statvfs.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "mount.h": "c",
+        "errors.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

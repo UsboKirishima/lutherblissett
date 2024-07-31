@@ -66,7 +66,8 @@ void *handle_client(void *arg)
         }
 
         printf("From client %s:%d: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), buff); 
-   
+        parseCommand(buff);
+        
         write(connfd, response, sizeof(response)); 
    
         if (strncmp("exit", buff, 4) == 0) { 
@@ -83,6 +84,7 @@ int lb_server(char HOST[], unsigned short PORT)
 {
     int sockfd, connfd, len; 
     struct sockaddr_in servaddr, cli; 
+    int opt = 1; 
    
     sockfd = socket(AF_INET, SOCK_STREAM, 0); 
     if (sockfd == -1) { 
@@ -92,10 +94,16 @@ int lb_server(char HOST[], unsigned short PORT)
     else
         printf("Socket successfully created..\n"); 
     bzero(&servaddr, sizeof(servaddr)); 
+
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+        printf("setsockopt(SO_REUSEADDR) failed...\n");
+        close(sockfd);
+        exit(0);
+    }
    
     // assign IP, PORT 
     servaddr.sin_family = AF_INET; 
-    servaddr.sin_addr.s_addr = htonl(HOST); 
+    servaddr.sin_addr.s_addr = htonl(htonl(INADDR_ANY)); 
     servaddr.sin_port = htons(PORT); 
    
     if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) { 
