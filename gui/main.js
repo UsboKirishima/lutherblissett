@@ -5,6 +5,41 @@ const net = require('net');
 let mainWindow;
 let tcpClient;
 
+function connectToServer(host, port) {
+  tcpClient = new net.Socket();
+  const TCP_PORT = Number(port);
+
+  tcpClient.connect(TCP_PORT, host, () => {
+    console.log('Connected to TCP server');
+    mainWindow.webContents.send('connection-status', 'connected');
+  });
+
+  tcpClient.on('data', (data) => {
+    console.log('Message received from the server TCP:', data.toString());
+    mainWindow.webContents.send('tcp-message', data.toString());
+  });
+
+  tcpClient.on('close', () => {
+    console.log('TCP connection closed');
+    mainWindow.webContents.send('connection-status', 'disconnected');
+  });
+
+  tcpClient.on('error', (err) => {
+    console.error('Error during TCP connection:', err);
+    mainWindow.webContents.send('connection-status', 'error');
+  });
+}
+
+function disconnectFromServer() {
+  if (tcpClient) {
+    tcpClient.end();
+    tcpClient.destroy();
+    tcpClient = null;
+    console.log('Disconnected from TCP server');
+    mainWindow.webContents.send('connection-status', 'disconnected');
+  }
+}
+
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -16,43 +51,25 @@ app.on('ready', () => {
       contextIsolation: true,
       enableRemoteModule: false,
       nodeIntegration: false,
-      
+
     }
   });
 
   mainWindow.loadFile('index.html');
 
-  // Configura il client TCP
-  tcpClient = new net.Socket();
-
-  const TCP_PORT = 8080;
-
-  tcpClient.connect(TCP_PORT, '127.0.0.1', () => {
-    console.log('Connesso al server TCP');
+  ipcMain.on('connect-to-server', (ev, host, port) => {
+    console.log(port)
+    connectToServer(host, port);
   });
+  ipcMain.on('disconnect-from-server', disconnectFromServer);
 
-  tcpClient.on('data', (data) => {
-    console.log('Messaggio ricevuto dal server TCP:', data.toString());
-    // Invia i dati ricevuti dal server TCP alla finestra
-    mainWindow.webContents.send('tcp-message', data.toString());
-  });
+  ipcMain.on('close-me', (evt, arg) => {
+    app.quit()
+  })
 
-  tcpClient.on('close', () => {
-    console.log('Connessione al server TCP chiusa');
-  });
-
-  tcpClient.on('error', (err) => {
-    console.error('Errore nella connessione TCP:', err);
-  });
-
-  // Gestisci i messaggi inviati dalla finestra
   ipcMain.on('send-message', (event, message) => {
     if (tcpClient) {
       tcpClient.write(message);
     }
   });
-
-  ipcMain.on('close-me', (evt, arg) => {
-    app.quit()
-  })
 });

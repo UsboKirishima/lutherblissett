@@ -51,6 +51,8 @@ img {
     padding: 10px;
     height: 200px;
     overflow-y: scroll;
+    color: #fff;
+    font-size: 10px;
 }
 
 #message-input {
@@ -61,6 +63,13 @@ img {
     background-color: #222;
     resize: none;
     -webkit-app-region: no-drag;
+    border: 1px soldi #fff;
+}
+
+textarea:focus {
+    border: 1px solid #bbb;
+    transition: 0.4s;
+    outline: 1px solid #aaa;
 }
 
 #send-button {
@@ -113,7 +122,7 @@ img {
     padding-top: 20px;
 }
 
-.sidenav a {
+.sidenav button a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 24px;
@@ -128,15 +137,23 @@ img {
     font-style: normal;
 }
 
-.sidenav a svg {
+.sidenav button a svg {
     margin-right: 5px;
 }
 
-.sidenav a:hover {
+.sidenav button a:hover {
     color: #f1f1f1;
     transition: 0.3s;
     fill: #f1f1f1;
 
+}
+
+.sidenav button {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
 }
 
 main {
@@ -148,12 +165,20 @@ main {
     padding: 0px 0px;
 }
 
+.page {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
 
 #connect-disconnect-button {
     font-weight: bold;
     color: #fff;
     padding: 10px 20px;
-    background-color: #222;
+    background-color: green;
     cursor: pointer;
     font-size: 24px;
     transition: 0.5s;
@@ -168,7 +193,7 @@ main {
 }
 
 #conn-status {
-    color: green;
+    color: red;
     font-size: 24px;
     text-transform: uppercase;
     display: flex;
@@ -185,4 +210,59 @@ main {
     height: 100%;
     display: inline-block;
     text-align: center;
+}
+
+.conn-conf {
+    -webkit-app-region: no-drag;
+}
+
+#host-input,
+#port-input {
+    padding: 10px;
+    box-sizing: border-box;
+    color: #999;
+    background-color: #222;
+    resize: none;
+    -webkit-app-region: no-drag;
+    border: 1px solid #fff;
+    text-decoration: none;
+}
+
+#host-input:focus,
+#port-input:focus {
+    border: 1px solid #bbb;
+    transition: 0.4s;
+    outline: 1px solid #aaa;
+}
+
+#host-input {
+    width: 50%;
+}
+
+#port-input {
+    width: 10%;
+}
+
+#error {
+    position: absolute;
+    left: 220px;
+    bottom: 10px;
+    background-color: #f00;
+    padding: 10px;
+    font-size: 14px;
+    color: #aaa;
+    border: 1px solid #fff;
+    display: none;
+}
+
+#error svg {
+    margin-right: 5px;
+}
+
+#home {
+    margin: 5% auto;
+}
+
+#shell {
+    margin-top: 5%;
 }

