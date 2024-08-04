@@ -1,0 +1,11 @@
+{
+  "name": "lutherblissett",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/UsboKirishima/lutherblissett",
+  "author": "UsboKirishima <usbertibox@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "gui": "cd gui && npm run start"
+  }
+}

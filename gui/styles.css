@@ -266,3 +266,22 @@ main {
 #shell {
     margin-top: 5%;
 }
+
+#info>div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+
+#info>div>h4 {
+    color: #fff;
+    font-size: 16px;
+}
+
+#info>div>p {
+    color: #ffffff9d;
+    font-size: 12px;
+    margin-left: auto;
+}

@@ -59,6 +59,15 @@ int sendNotify() {
     return 0;
 }
 
+int test(int connfd) {
+    char test_buff[1024] = "Test Successfully Ended";
+
+    
+    write(connfd, test_buff, strlen(test_buff));
+
+    return 0;
+}
+
 
 CommandsHandlerMap commandsMap[] = {
     {"beep", systemBeep},
@@ -68,12 +77,17 @@ CommandsHandlerMap commandsMap[] = {
     {NULL, NULL}
 };
 
-void parseCommand(const char *command) {
+void parseCommand(const char *command, int connfd) {
     for (int i = 0; commandsMap[i].name != NULL; i++) {
         if (strcmp(commandsMap[i].name, command) == 0) {
             commandsMap[i].command();
             return;
         }
+    }
+
+    if(strcmp("test", command) == 0) {
+        test(connfd);
+        return;
     }
     printf("Cannot find command: %s\n", command);
 }

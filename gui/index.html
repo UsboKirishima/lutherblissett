@@ -73,8 +73,8 @@
         <section id="home" class="page active">
             <div class="connection">
                 <div class="conn-conf">
-                    <input type="text" id="host-input" placeholder="Host"></textarea>
-                    <input type="text" id="port-input" placeholder="Port"></textarea>
+                    <input type="text" id="host-input" placeholder="Host" value="127.0.0.1"></textarea>
+                    <input type="text" id="port-input" placeholder="Port" value="8080"></textarea>
                 </div>
                 <p id="conn-status">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -87,7 +87,9 @@
             </div>
         </section>
 
-        <section id="info" class="page"></section>
+        <section id="info" onload="updateInfo()" class="page">
+            <h1>Not connected yet!</h1>
+        </section>
         <section id="exploits" class="page"></section>
         <section id="shell" class="page">
             <textarea id="message-input" placeholder="Insert your message..."></textarea>
