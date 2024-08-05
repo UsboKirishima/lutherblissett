@@ -18,6 +18,21 @@ const exploitsButton = document.getElementById("exploitsButton");
 const shellButton = document.getElementById("shellButton");
 const settingsButton = document.getElementById("settingsButton");
 
+const systemButton = document.getElementById('systemButton');
+const filesButton = document.getElementById('filesButton');
+const processButton = document.getElementById('processButton');
+const utilsButton = document.getElementById('utilsButton');
+const scriptsButton = document.getElementById('scriptsButton');
+
+const systemIndex = document.getElementById('systemIndex');
+const filesIndex = document.getElementById('filesIndex');
+const processIndex = document.getElementById('processIndex');
+const utilsIndex = document.getElementById('utilsIndex');
+const scriptsIndex = document.getElementById('scriptsIndex');
+
+const rebootButton = document.getElementById('rebootButton');
+const poweroffButton = document.getElementById('poweroffButton');
+
 const hostInput = document.getElementById("host-input");
 const portInput = document.getElementById("port-input");
 
@@ -38,6 +53,8 @@ function showPage(page) {
     shellIndex.classList.add("active");
   } else if (page === 'info') {
     infoIndex.classList.add("active");
+  } else if (page == 'exploits') {
+    exploitsIndex.classList.add('active')
   } else {
     homeIndex.classList.add('active');
   }
@@ -58,6 +75,40 @@ infoButton.addEventListener("click", () => showPage("info"));
 exploitsButton.addEventListener("click", () => showPage("exploits"));
 shellButton.addEventListener("click", () => showPage("shell"));
 settingsButton.addEventListener("click", () => showPage("settings"));
+
+
+function showExploit(page) {
+  systemIndex.classList.remove("active");
+  filesIndex.classList.remove("active");
+  processIndex.classList.remove("active");
+  utilsIndex.classList.remove("active");
+  scriptsIndex.classList.remove("active");
+
+  if(page == 'system') {
+    systemIndex.classList.add("active");
+  }
+  else if (page === 'files') {
+    filesIndex.classList.add("active");
+  }
+  else if (page === 'process') {
+    processIndex.classList.add("active");
+  }
+  else if (page === 'utils') {
+    utilsIndex.classList.add("active");
+  }
+  else if (page === 'scripts') {
+    scriptsIndex.classList.add("active");
+  }
+  else {
+    systemIndex.classList.add("active");
+  }
+}
+
+systemButton.addEventListener('click', () => showExploit('system'))
+filesButton.addEventListener('click', () => showExploit('files'))
+processButton.addEventListener('click', () => showExploit('process'))
+utilsButton.addEventListener('click', () => showExploit('utils'))
+scriptsButton.addEventListener('click', () => showExploit('scripts'))
 
 let tcpClient;
 
@@ -89,6 +140,13 @@ echo -e "lb{0x0001}ù$(whoami)ù$(hostnamectl | grep "Operating" | cut -d ':' -f
   })()
 
 }
+
+rebootButton.addEventListener('click', () => {
+  window.electron.sendMessage('lb{0x0002}');
+})
+poweroffButton.addEventListener('click', () => {
+  window.electron.sendMessage('lb{0x0003}');
+})
 
 
 window.electron.onConnectionStatus((status) => {
@@ -189,3 +247,4 @@ window.electron.onTcpMessage((message) => {
                 </p>
             </div>`
 });
+

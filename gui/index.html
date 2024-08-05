@@ -90,7 +90,77 @@
         <section id="info" onload="updateInfo()" class="page">
             <h1>Not connected yet!</h1>
         </section>
-        <section id="exploits" class="page"></section>
+        <section id="exploits" class="page">
+            <div class="exploitsContainer">
+                <nav class="exploitsCategories">
+                    <button id="systemButton">System</button>
+                    <button id="filesButton">Files</button>
+                    <button id="processButton">Process</button>
+                    <button id="utilsButton">Utils</button>
+                    <button id="scriptsButton">Scripts</button>
+                </nav>
+                <dir id="systemIndex" class="page active">
+                    <div class="basicMods">
+                        <div class="basicSide">
+                            <div>
+                                <p>Reboot</p>
+                                <button id="rebootButton">RUN</button>
+                            </div>
+                            <div>
+                                <p>Poweroff</p>
+                                <button id="poweroffButton">RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                        </div>
+                        <div class="basicSide">
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                            <div>
+                                <p>Mods Ca</p>
+                                <button>RUN</button>
+                            </div>
+                        </div>
+                    </div>
+                </dir>
+                <dir id="filesIndex" class="page">
+                    <h1>filesIndex</h1>
+                </dir>
+                <dir id="processIndex" class="page">
+                    <h1>processIndex</h1>
+                </dir>
+                <dir id="utilsIndex" class="page">
+                    <h1>utilsIndex</h1>
+                </dir>
+                <dir id="scriptsIndex" class="page">
+                    <h1>scriptsIndex</h1>
+                </dir>
+            </div>
+        </section>
         <section id="shell" class="page">
             <textarea id="message-input" placeholder="Insert your message..."></textarea>
             <button id="send-button">Send</button>

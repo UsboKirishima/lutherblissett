@@ -285,3 +285,75 @@ main {
     font-size: 12px;
     margin-left: auto;
 }
+
+.exploitsConainer {
+    width: 100%;
+}
+
+.exploitsCategories {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.exploitsCategories button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    margin: 0;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+    padding: 10px;
+    color: #fff;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+
+.exploitsCategories button:hover {
+    transition: 0.3s;
+    background-color: #fff;
+    color: #080808;
+}
+
+.basicMods {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    -webkit-app-region: no-drag;
+}
+
+.basicSide {
+    width: 50%;
+    margin: 1%;
+}
+
+.basicSide>div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.basicSide>div>p {
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.basicSide>div>button {
+    width: 50px;
+    height: 25px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: bolder;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.basicSide>div>button:hover {
+    transition: 0.3s;
+    background-color: #fff;
+    color: #080808;
+}

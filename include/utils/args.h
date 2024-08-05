@@ -15,8 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Luther Blissett.  If not, see <http://www.gnu.org/licenses/>.
  */
-void lb_reboot();
 
-void lb_shutdown();
+char **split(const char *str, char delimiter, int *num_tokens);
 
-void lb_notify(char *notifyTitle, char *notifyDescription);
+void free_split(char **tokens, int num_tokens);
