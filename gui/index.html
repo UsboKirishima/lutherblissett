@@ -73,8 +73,8 @@
         <section id="home" class="page active">
             <div class="connection">
                 <div class="conn-conf">
-                    <input type="text" id="host-input" placeholder="Host" value="127.0.0.1"></textarea>
-                    <input type="text" id="port-input" placeholder="Port" value="8080"></textarea>
+                    <input type="text" id="host-input" placeholder="Host" value="127.0.0.1">
+                    <input type="text" id="port-input" placeholder="Port" value="8080">
                 </div>
                 <p id="conn-status">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -99,7 +99,7 @@
                     <button id="utilsButton">Utils</button>
                     <button id="scriptsButton">Scripts</button>
                 </nav>
-                <dir id="systemIndex" class="page active">
+                <div id="systemIndex" class="page active">
                     <div class="basicMods">
                         <div class="basicSide">
                             <div>
@@ -146,19 +146,42 @@
                             </div>
                         </div>
                     </div>
-                </dir>
-                <dir id="filesIndex" class="page">
-                    <h1>filesIndex</h1>
-                </dir>
-                <dir id="processIndex" class="page">
+                </div>
+                <div id="filesIndex" class="page">
+                    <div class="fullSide">
+                        <div>
+                            <p>Get file</p>
+                            <input type="text" id="sourceInput" placeholder="Server Path" value="">
+                            <input type="text" id="destinationInput" placeholder="Output file" value="">
+                            <button id="getfileButton">RUN</button>
+                        </div>
+                        <div>
+                            <p>Mods Ca</p>
+                            <button>RUN</button>
+                        </div>
+                        <div>
+                            <p>Mods Ca</p>
+                            <button>RUN</button>
+                        </div>
+                        <div>
+                            <p>Mods Ca</p>
+                            <button>RUN</button>
+                        </div>
+                        <div>
+                            <p>Mods Ca</p>
+                            <button>RUN</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="processIndex" class="page">
                     <h1>processIndex</h1>
-                </dir>
-                <dir id="utilsIndex" class="page">
+                </div>
+                <div id="utilsIndex" class="page">
                     <h1>utilsIndex</h1>
-                </dir>
-                <dir id="scriptsIndex" class="page">
+                </div>
+                <div id="scriptsIndex" class="page">
                     <h1>scriptsIndex</h1>
-                </dir>
+                </div>
             </div>
         </section>
         <section id="shell" class="page">

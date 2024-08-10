@@ -7,4 +7,7 @@ contextBridge.exposeInMainWorld('electron', {
   onTcpMessage: (callback) => ipcRenderer.on('tcp-message', (event, message) => callback(message)),
   onConnectionStatus: (callback) => ipcRenderer.on('connection-status', (event, status) => callback(status)),
   quit: () => ipcRenderer.send('close-me'),
+  requestFileTransfer: (sourcePath, destinationPath) => {
+    ipcRenderer.send('request-file-transfer', { sourcePath, destinationPath });
+  },
 });

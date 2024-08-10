@@ -357,3 +357,74 @@ main {
     background-color: #fff;
     color: #080808;
 }
+
+.basicSide>div>input {
+    padding: 10px;
+    box-sizing: border-box;
+    color: #999;
+    background-color: #222;
+    resize: none;
+    -webkit-app-region: no-drag;
+    border: 1px solid #fff;
+    text-decoration: none;
+}
+
+.basicSide>div>input {
+    border: 1px solid #bbb;
+    transition: 0.4s;
+    outline: 1px solid #aaa;
+}
+
+.fullSide {
+    width: 100%;
+    margin: 1%;
+}
+
+.fullSide>div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.fullSide>div>p {
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.fullSide>div>button {
+    width: 50px;
+    height: 25px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: bolder;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.fullSide>div>button:hover {
+    transition: 0.3s;
+    background-color: #fff;
+    color: #080808;
+}
+
+.fullSide>div>input {
+    height: 25px;
+    width: 40%;
+    margin-right: 5px;
+    box-sizing: border-box;
+    color: #999;
+    background-color: #222;
+    resize: none;
+    -webkit-app-region: no-drag;
+    border: 1px solid #fff;
+    text-decoration: none;
+}
+
+.fullSide>div>input:focus {
+    border: 1px solid #bbb;
+    outline: none;
+    transition: 0.4s;
+}
