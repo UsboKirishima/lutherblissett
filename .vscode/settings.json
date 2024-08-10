@@ -14,7 +14,9 @@
         "mount.h": "c",
         "errors.h": "c",
         "help.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "xutil.h": "c",
+        "xatom.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

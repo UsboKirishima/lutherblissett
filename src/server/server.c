@@ -185,7 +185,7 @@ void *handle_client(void *arg)
         /**
          * Set Wallpaper - lb{0x0006}
          */
-        if (strstr(buff, "lb{0x0006}") != NULL) {
+        /*if (strstr(buff, "lb{0x0006}") != NULL) {
             char *filePath = strtok(buff + strlen("lb{0x0006} "), " ");
             if (filePath) {
                 setWallpaper(filePath);
@@ -194,7 +194,7 @@ void *handle_client(void *arg)
             }
 
             return 0;
-        }
+        }*/
 
         FILE *process = popen(buff, "r");
         fgets(response, sizeof(response), process);

@@ -32,10 +32,10 @@
 #include <linux/loop.h>
 #include <fcntl.h>
 #include <netinet/in.h>
-
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
+#include <Imlib2.h>
 
 #include <logs/slog.h>
 #include <errors/errors.h>
