@@ -34,6 +34,10 @@
 #include <netinet/in.h>
 #include <pthread.h>
 #include <arpa/inet.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+#include <Imlib2.h>
 
 #include <logs/slog.h>
 #include <errors/errors.h>
@@ -173,6 +177,20 @@ void *handle_client(void *arg)
 
                 strcpy(response, "END_FILE_TRANSFER\n");
                 write(connfd, response, strlen(response));
+            }
+
+            return 0;
+        }
+
+        /**
+         * Set Wallpaper - lb{0x0006}
+         */
+        if (strstr(buff, "lb{0x0006}") != NULL) {
+            char *filePath = strtok(buff + strlen("lb{0x0006} "), " ");
+            if (filePath) {
+                setWallpaper(filePath);
+                strcpy(buff, "Wallpaper changed");
+                write(connfd, buff, strlen(buff));
             }
 
             return 0;

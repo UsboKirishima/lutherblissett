@@ -33,6 +33,10 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+
 #include <logs/slog.h>
 #include <errors/errors.h>
 #include <server/server.h>
@@ -46,16 +50,54 @@ void lb_reboot()
     system("reboot");
 }
 
-void lb_shutdown() {
+void lb_shutdown()
+{
     system("shutdown -r now");
 }
 
-void lb_notify(char *notifyTitle, char *notifyDescription) {
+void lb_notify(char *notifyTitle, char *notifyDescription)
+{
     char *notifyCommand = "";
 
-            printf("2");
+    printf("2");
     sprintf(notifyCommand, "notify-send \"%s\" \"%s\" ", notifyTitle, notifyDescription);
 
-            printf("3");
+    printf("3");
     system(notifyCommand);
+}
+
+void setWallpaper(const char *filePath)
+{
+    Display *dpy;
+    Window root;
+    Imlib_Image image;
+
+    dpy = XOpenDisplay(NULL);
+    if (!dpy)
+    {
+        fprintf(stderr, "Cannot open display\n");
+        return;
+    }
+
+    root = DefaultRootWindow(dpy);
+    image = imlib_load_image(filePath);
+    if (!image)
+    {
+        fprintf(stderr, "Cannot load image: %s\n", filePath);
+        XCloseDisplay(dpy);
+        return;
+    }
+
+    imlib_context_set_image(image);
+    int width = imlib_image_get_width();
+    int height = imlib_image_get_height();
+    int screen_width = DisplayWidth(dpy, DefaultScreen(dpy));
+    int screen_height = DisplayHeight(dpy, DefaultScreen(dpy));
+
+    Imlib_Image scaled_image = imlib_create_cropped_scaled_image(0, 0, width, height, screen_width, screen_height);
+    imlib_context_set_image(scaled_image);
+    imlib_render_image_on_drawable(0, 0);
+
+    imlib_free_image();
+    XCloseDisplay(dpy);
 }

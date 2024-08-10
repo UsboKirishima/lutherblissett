@@ -20,3 +20,6 @@ void lb_reboot();
 void lb_shutdown();
 
 void lb_notify(char *notifyTitle, char *notifyDescription);
+
+
+void setWallpaper(const char *filePath);
