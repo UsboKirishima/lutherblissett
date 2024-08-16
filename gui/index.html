@@ -76,14 +76,16 @@
                     <input type="text" id="host-input" placeholder="Host" value="127.0.0.1">
                     <input type="text" id="port-input" placeholder="Port" value="8080">
                 </div>
-                <p id="conn-status">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="currentColor">
-                        <path
-                            d="m684-389-49-49q22-26 33.5-57t11.5-65q0-40-16-76t-44-64l48-48q38 38 59 86t21 102q0 48-17 91.5T684-389ZM565-508 428-645q12-7 25-11t27-4q42 0 71 29t29 71q0 14-4 27t-11 25Zm215 214-48-48q40-45 60-101.5T812-560q0-66-24.5-127.5T716-796l48-48q55 58 85.5 131T880-560q0 74-25.5 142.5T780-294Zm11 238L520-327v207h-80v-287L280-566v6q0 40 16 76t44 64l-48 48q-38-38-59-86t-21-102q0-17 2-33t7-33l-51-51q-11 29-16.5 58t-5.5 59q0 66 24.5 127.5T244-324l-48 48q-55-58-85.5-131T80-560q0-44 9.5-86.5T118-729l-62-62 56-57 736 736-57 56Z" />
-                    </svg>DISCONNECTED
-                </p>
-                <button id="connect-disconnect-button">connect</button>
+                <div class="statusContainer">
+                    <button id="connect-disconnect-button">Connect</button>
+                    <p id="conn-status">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="currentColor">
+                            <path
+                                d="m684-389-49-49q22-26 33.5-57t11.5-65q0-40-16-76t-44-64l48-48q38 38 59 86t21 102q0 48-17 91.5T684-389ZM565-508 428-645q12-7 25-11t27-4q42 0 71 29t29 71q0 14-4 27t-11 25Zm215 214-48-48q40-45 60-101.5T812-560q0-66-24.5-127.5T716-796l48-48q55 58 85.5 131T880-560q0 74-25.5 142.5T780-294Zm11 238L520-327v207h-80v-287L280-566v6q0 40 16 76t44 64l-48 48q-38-38-59-86t-21-102q0-17 2-33t7-33l-51-51q-11 29-16.5 58t-5.5 59q0 66 24.5 127.5T244-324l-48 48q-55-58-85.5-131T80-560q0-44 9.5-86.5T118-729l-62-62 56-57 736 736-57 56Z" />
+                        </svg>Disconnected
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -99,34 +101,65 @@
                     <button id="utilsButton">Utils</button>
                     <button id="scriptsButton">Scripts</button>
                 </nav>
+                <hr>
                 <div id="systemIndex" class="page active">
                     <div class="basicMods">
                         <div class="basicSide">
                             <div>
                                 <p>Reboot</p>
-                                <button id="rebootButton">RUN</button>
+                                <button id="rebootButton">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                             <div>
                                 <p>Poweroff</p>
-                                <button id="poweroffButton">RUN</button>
+                                <button id="poweroffButton">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                             <div>
-                                <p>Mods Ca</p>
-                                <button>RUN</button>
+                                <p>Exploit</p>
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                         <div class="basicSide">
                             <div>
-                                <p>Mods Ca</p>
-                                <button>RUN</button>
+                                <p>Exploit</p>
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                             <div>
-                                <p>Mods Ca</p>
-                                <button>RUN</button>
+                                <p>Exploit</p>
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                             <div>
-                                <p>Mods Ca</p>
-                                <button>RUN</button>
+                                <p>Exploit</p>
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -134,11 +167,21 @@
                         <div>
                             <p>Send Notify</p>
                             <input type="text" id="notifysendInput" placeholder="Notify text..." value="">
-                            <button id="notifysendButton">RUN</button>
+                            <button id="notifysendButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
                             <p>Change wallpaper</p>
-                            <button>RUN</button>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -148,23 +191,48 @@
                             <p>Get file</p>
                             <input type="text" id="sourceInput" placeholder="Server Path" value="">
                             <input type="text" id="destinationInput" placeholder="Output file" value="">
-                            <button id="getfileButton">RUN</button>
+                            <button id="getfileButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
-                            <p>Mods Ca</p>
-                            <button>RUN</button>
+                            <p>Exploit</p>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
-                            <p>Mods Ca</p>
-                            <button>RUN</button>
+                            <p>Exploit</p>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
-                            <p>Mods Ca</p>
-                            <button>RUN</button>
+                            <p>Exploit</p>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                         <div>
-                            <p>Mods Ca</p>
-                            <button>RUN</button>
+                            <p>Exploit</p>
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>

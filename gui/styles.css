@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Manrope:700|Manrope:400');
 
 :root {
     --color-base-00: #000;
@@ -19,7 +20,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Manrope";
     background-color: #111111e8;
     -webkit-user-select: none;
     -webkit-app-region: drag;
@@ -27,11 +28,12 @@ body {
 
 h1 {
     color: #f3f3f3;
-    font-family: "Dancing Script", cursive;
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
     text-align: center;
+    margin: 20% 0;
+    display: block;
 }
 
 img {
@@ -45,9 +47,15 @@ img {
     margin: 20px auto;
 }
 
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #333;  /* Colore della linea */
+    margin: 20px 0;          /* Spaziatura sopra e sotto */
+}
+
 #messages {
     margin-top: 20px;
-    border: 1px solid #ccc;
     padding: 10px;
     height: 200px;
     overflow-y: scroll;
@@ -59,34 +67,25 @@ img {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    color: #999;
-    background-color: #222;
+    color: #fff;
     resize: none;
     -webkit-app-region: no-drag;
-    border: 1px soldi #fff;
 }
 
-textarea:focus {
-    border: 1px solid #bbb;
-    transition: 0.4s;
-    outline: 1px solid #aaa;
-}
 
 #send-button {
     margin-top: 10px;
     padding: 10px 20px;
     font-weight: bold;
     color: #fff;
-    background-color: #222;
     cursor: pointer;
-    transition: 0.5s;
-    border: 1px solid #fff;
     -webkit-app-region: no-drag;
 }
 
 #close-button:hover {
     background-color: #111;
     transition: 0.5s;
+    transform: translateY(0);
 }
 
 #close-button {
@@ -101,14 +100,10 @@ textarea:focus {
     background-color: #222;
     cursor: pointer;
     transition: 0.5s;
-    border: 1px solid #444;
+    border: none;
     -webkit-app-region: no-drag;
 }
 
-#send-button:hover {
-    background-color: #111;
-    transition: 0.5s;
-}
 
 .sidenav {
     height: 100%;
@@ -117,7 +112,7 @@ textarea:focus {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #000000cc;
+    background-color: #000000b0;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -149,11 +144,31 @@ textarea:focus {
 }
 
 .sidenav button {
+    width: 100%;
     background-color: transparent;
+    opacity: 90%;
+    box-shadow: none;
     border: none;
-    margin: 0;
+    justify-content: center;
+    margin: 0 auto;
     cursor: pointer;
     -webkit-app-region: no-drag;
+    clip-path: none;
+}
+
+.sidenav button:hover {
+    width: 90%;
+    background-color: hsla(155, 100%, 65%, 0.171);
+    clip-path: path("M 0 25 C 0 -5, -5 0, 80 0 S 160 -5, 160 25, 165 50 80 50, 0 55, 0 25");
+    background-color: #000;
+    opacity: 60%;
+    box-shadow: 0px -3px 15px 0px hsla(155, 100%, 75%, 25%) inset;
+    border: none;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+    transition: 0.4s;
+    clip-path: none;
+    transform: translateY(0);
 }
 
 main {
@@ -167,36 +182,70 @@ main {
 
 .page {
     display: none;
+    animation: fadeOut 0.8s ease-in-out;
+    animation-fill-mode: forwards; /* Mantiene l'opacità finale */
 }
 
 .active {
     display: block;
 }
 
+.statusContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
 
 #connect-disconnect-button {
-    font-weight: bold;
     color: #fff;
     padding: 10px 20px;
-    background-color: green;
+    background-color: hsla(155, 100%, 65%, 0.171);
+    border-radius: 13px;
+    clip-path: path("M 0 25 C 0 -5, -5 0, 80 0 S 160 -5, 160 25, 165 50 80 50, 0 55, 0 25");
+    box-shadow: 0px -3px 15px 0px hsla(155, 100%, 75%, 25%) inset;
     cursor: pointer;
-    font-size: 24px;
-    transition: 0.5s;
-    border: 1px solid #fff;
+    border: none;
+    font-family: "Manrope";
+    font-size: 1rem;
     -webkit-app-region: no-drag;
-    text-transform: uppercase;
+    opacity: 60%;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: block;
+}
+
+button {
+    color: #fff;
+    background-color: hsla(155, 100%, 65%, 0.171);
+    border-radius: 13px;
+    clip-path: path("M 0 25 C 0 -5, -5 0, 80 0 S 160 -5, 160 25, 165 50 80 50, 0 55, 0 25");
+    box-shadow: 0px -3px 15px 0px hsla(155, 100%, 75%, 25%) inset;
+    cursor: pointer;
+    border: none;
+    font-family: "Manrope";
+    font-size: 1rem;
+    -webkit-app-region: no-drag;
+    opacity: 60%;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: block;
+}
+
+button:hover {
+
+    transform: translateY(5px);
 }
 
 #connect-disconnect-button:hover {
-    background-color: #111;
-    transition: 0.5s;
+
+    transform: translateY(5px);
 }
 
 #conn-status {
     color: red;
     font-size: 24px;
-    text-transform: uppercase;
-    display: flex;
+    display: none;
     justify-content: center;
 }
 
@@ -221,11 +270,44 @@ main {
     padding: 10px;
     box-sizing: border-box;
     color: #999;
-    background-color: #222;
     resize: none;
     -webkit-app-region: no-drag;
-    border: 1px solid #fff;
     text-decoration: none;
+    outline: 0;
+    transition: 0.3s ease;
+    background: rgba(49, 49, 49, 0.096);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+input,
+textarea,
+#messages {
+    box-sizing: border-box;
+    color: #999;
+    resize: none;
+    -webkit-app-region: no-drag;
+    text-decoration: none;
+    outline: 0;
+    transition: 0.3s ease;
+    background: rgba(49, 49, 49, 0.096);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+input:focus,
+textarea:focus {
+    border: 1px solid #bbb;
+    transition: 0.4s;
+    outline: 1px solid #aaa;
+}
+
+input::placeholder {
+    color: #666;
 }
 
 #host-input:focus,
@@ -260,7 +342,7 @@ main {
 }
 
 #home {
-    margin: 5% auto;
+    margin: 10% auto;
 }
 
 #shell {
@@ -273,6 +355,11 @@ main {
     flex-wrap: wrap;
     justify-content: left;
     align-items: center;
+    background-color: #303030;
+    opacity: 60%;
+    padding: 0 2%;
+    margin: 10px 0;
+    border-radius: 14px;
 }
 
 #info>div>h4 {
@@ -298,22 +385,36 @@ main {
 }
 
 .exploitsCategories button {
-    background-color: transparent;
-    border: 1px solid #fff;
-    margin: 0;
+    display: block;
+    margin-top: 7px;
+    margin-left: 15px;
+    padding: 0.6rem 1rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    background: none;
+    width: 170px;
+    border-radius: 14px;
+    border: 0;
+    color: white;
+    transition: 0.2s ease;
     cursor: pointer;
-    -webkit-app-region: no-drag;
-    padding: 10px;
-    color: #fff;
     transition: 0.3s;
-    font-weight: bold;
 }
 
 
 .exploitsCategories button:hover {
+    transform: translateY(0);
+    background-color: #ffffff2c;
     transition: 0.3s;
-    background-color: #fff;
-    color: #080808;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0; /* Opacità iniziale */
+    }
+    to {
+        opacity: 1; /* Opacità finale */
+    }
 }
 
 .basicMods {
@@ -325,6 +426,7 @@ main {
 
 .basicSide {
     width: 50%;
+    margin-top: 3px;
     margin: 1%;
     -webkit-app-region: no-drag;
 }
@@ -347,29 +449,17 @@ main {
     height: 25px;
     background-color: transparent;
     color: #fff;
-    border: 1px solid #fff;
     font-weight: bolder;
     transition: 0.3s;
     cursor: pointer;
 }
 
 .basicSide>div>button:hover {
-    transition: 0.3s;
-    background-color: #fff;
-    color: #080808;
-}
+    background-color: #ffffff1c;
+    transform: translateX(3px);
+    transform: translateY(0);
+    transition: 0.5s;
 
-.basicSide>div>input {
-    height: 25px;
-    width: 40%;
-    margin-right: 5px;
-    box-sizing: border-box;
-    color: #999;
-    background-color: #222;
-    resize: none;
-    -webkit-app-region: no-drag;
-    border: 1px solid #fff;
-    text-decoration: none;
 }
 
 .basicSide>div>input:focus {
@@ -404,33 +494,23 @@ main {
     height: 25px;
     background-color: transparent;
     color: #fff;
-    border: 1px solid #fff;
     font-weight: bolder;
     transition: 0.3s;
     cursor: pointer;
 }
 
 .fullSide>div>button:hover {
-    transition: 0.3s;
-    background-color: #fff;
-    color: #080808;
+    background-color: #ffffff1c;
+    transform: translateX(3px);
+    transform: translateY(0);
+    transition: 0.5s;
+
 }
+
 
 .fullSide>div>input {
     height: 25px;
     width: 40%;
     margin-right: 5px;
-    box-sizing: border-box;
-    color: #999;
-    background-color: #222;
-    resize: none;
-    -webkit-app-region: no-drag;
-    border: 1px solid #fff;
-    text-decoration: none;
-}
-
-.fullSide>div>input:focus {
-    border: 1px solid #bbb;
-    outline: none;
-    transition: 0.4s;
+    padding-left: 5px;
 }
