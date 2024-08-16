@@ -76,12 +76,13 @@ app.on('ready', () => {
     height: 600,
     autoHideMenuBar: true,
     frame: false,
+    alwaysOnTop: true,
+    transparent: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       enableRemoteModule: false,
       nodeIntegration: false,
-
     }
   });
 

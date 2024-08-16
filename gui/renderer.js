@@ -36,13 +36,16 @@ const scriptsIndex = document.getElementById('scriptsIndex');
 const rebootButton = document.getElementById('rebootButton');
 const poweroffButton = document.getElementById('poweroffButton');
 
+const notifysendButton = document.getElementById('notifysendButton');
+const notifysendInput = document.getElementById('notifysendInput')
+
 /**
  * File exploits
  */
 const getfileButton = document.getElementById('getfileButton');
 
-const sourceInput = document.getElementById('sourceInput').value
-const destinationInput = document.getElementById('destinationInput').value
+const sourceInput = document.getElementById('sourceInput');
+const destinationInput = document.getElementById('destinationInput');
 
 const hostInput = document.getElementById("host-input");
 const portInput = document.getElementById("port-input");
@@ -162,7 +165,10 @@ poweroffButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0003}');
 })
 getfileButton.addEventListener('click', () => {
-  window.electron.requestFileTransfer(sourceInput, destinationInput);
+  window.electron.requestFileTransfer(sourceInput.value, destinationInput.value);
+})
+notifysendButton.addEventListener('click', () => {
+  window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value);
 })
 
 window.electron.onConnectionStatus((status) => {

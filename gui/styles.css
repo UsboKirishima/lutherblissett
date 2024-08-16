@@ -20,7 +20,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #111;
+    background-color: #111111e8;
     -webkit-user-select: none;
     -webkit-app-region: drag;
 }
@@ -117,7 +117,7 @@ textarea:focus {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #000;
+    background-color: #000000cc;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -326,6 +326,7 @@ main {
 .basicSide {
     width: 50%;
     margin: 1%;
+    -webkit-app-region: no-drag;
 }
 
 .basicSide>div {
@@ -378,8 +379,11 @@ main {
 }
 
 .fullSide {
-    width: 100%;
-    margin: 2%;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 5%;
+    -webkit-app-region: no-drag;
+    margin-top: 1%;
 }
 
 .fullSide>div {

