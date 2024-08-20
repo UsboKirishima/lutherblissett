@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
  * @example
  *          Input: lb{0x0001}
  * @example
- *          Output: "Arch LinuxùKernel 6.10ù..."
+ *          Output: "lb{0x0001}|Arch Linux|Kernel 6.10|..."
  */
 public class GetInfo {
 
@@ -156,8 +156,10 @@ public class GetInfo {
 
     public void run(String command, PrintWriter out) {
 
-        final char separator = 'ù';
-        String responseFormatted = username
+        final char separator = '|';
+        String responseFormatted = "lb{0x0001}"
+                + separator
+                + username /* User name */
                 + separator
                 + getOsName() /* Os Name */
                 + separator
@@ -172,6 +174,6 @@ public class GetInfo {
                 + getUptime(); /* Formatted Uptime */
 
         System.out.println(responseFormatted);
-        out.println("Test!!!");
+        out.println(responseFormatted);
     }
 }

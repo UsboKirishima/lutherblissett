@@ -89,6 +89,8 @@ class ClientHandler extends Thread {
             while ((str = in.readLine()) != null) {
                 boolean isCommand = false; /* Variable to track if input is command */
 
+                System.out.println("Client Input: " + str);
+
                 /*
                  * Check if input is a command
                  * else set isCommand as false
@@ -121,7 +123,7 @@ class ClientHandler extends Thread {
                 if(isCommand == true) continue; /* Check if input isCommand else exec it */
                 
                 String result = executeCommand(str);
-                out.println(result);
+                out.println(result != null ? result : "No Output provided");
             }
         } catch (IOException e) {
             System.err.println("[ERROR] Error handling client: " + e.getMessage());
