@@ -26,11 +26,14 @@ client_socket.connect((HOST, PORT))
 
 message = input(" -> ")
 
-while message.lower().strip() != 'exit':    
-    client_socket.send(message.encode()) 
+while message.lower().strip() != 'exit':
+
+        
+    client_socket.send((message + '\n').encode())
 
     data = client_socket.recv(1024).decode()  
-    print('Received from server: ' + data) 
+    print('Received from server: ' + data)
+
 
     
     message = input(" -> ")  

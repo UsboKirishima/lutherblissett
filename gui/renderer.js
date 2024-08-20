@@ -35,6 +35,7 @@ const scriptsIndex = document.getElementById('scriptsIndex');
  */
 const rebootButton = document.getElementById('rebootButton');
 const poweroffButton = document.getElementById('poweroffButton');
+const showdisplayButton = document.getElementById('showdisplayButton');
 
 const notifysendButton = document.getElementById('notifysendButton');
 const notifysendInput = document.getElementById('notifysendInput')
@@ -169,6 +170,9 @@ getfileButton.addEventListener('click', () => {
 })
 notifysendButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value);
+})
+showdisplayButton.addEventListener('click', () => {
+  window.electron.sendMessage('lb{0x0007} ');
 })
 
 window.electron.onConnectionStatus((status) => {
