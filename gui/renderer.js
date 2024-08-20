@@ -166,7 +166,7 @@ getfileButton.addEventListener('click', () => {
   window.electron.requestFileTransfer(sourceInput.value, destinationInput.value);
 })
 notifysendButton.addEventListener('click', () => {
-  window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value);
+  window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value + "\n");
 })
 showdisplayButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0007}\n');

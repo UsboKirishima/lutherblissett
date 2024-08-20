@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
  * Here the client sends the command lb{0x0001} to the server
  * and expects to receive a string containing
  * user, os, kernel, cpu, mem_u, mem_t, uptime,
- * separated by the character 'ù'.
+ * separated by the character '|'.
  * 
  * @example
  *          Input: lb{0x0001}
