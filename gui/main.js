@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Notification, nativeImage } = require('electron');
+const { app, BrowserWindow, ipcMain, Notification } = require('electron');
 const path = require('path');
 const net = require('net');
 const fs = require('fs');
@@ -6,6 +6,9 @@ const fs = require('fs');
 let mainWindow;
 let tcpClient;
 let imageWindow;
+let canvasContext;
+let imageBuffer = [];
+let imageCanvas;
 
 function showNotification(title, body) {
   new Notification({ title, body }).show();
@@ -23,6 +26,8 @@ function connectToServer(host, port) {
   tcpClient.on('data', (data) => {
     const message = data.toString();
     console.log('Message received from server:', message);
+
+
 
     if (message.startsWith('START_FILE_TRANSFER')) {
       const [_, destinationPath] = message.split(' ');
@@ -43,21 +48,19 @@ function connectToServer(host, port) {
           fileStream.write(chunk);
         }
       });
-    } else if (message.startsWith('lb{0x0007}')) {
-      // Handling the display of the remote desktop
-      const widthBuffer = data.slice(0, 4);
-      const heightBuffer = data.slice(4, 8);
-      const imageData = data.slice(8);
+    } else {
+      mainWindow.webContents.send('tcp-message', message);
+    }
+  });
 
-      const width = widthBuffer.readInt32BE(0);
-      const height = heightBuffer.readInt32BE(0);
+  tcpClient.on('data', (data) => {
+    const message = data.toString();
 
-      const image = nativeImage.createFromBuffer(imageData, { width, height });
-      
+    if (message.startsWith('lb{0x0007}')) {
       if (!imageWindow) {
         imageWindow = new BrowserWindow({
-          width: width,
-          height: height,
+          width: 500,
+          height: 300,
           autoHideMenuBar: true,
           frame: true,
           alwaysOnTop: false,
@@ -66,17 +69,43 @@ function connectToServer(host, port) {
             nodeIntegration: true,
           }
         });
-        imageWindow.loadURL(`data:text/html,
-          <html><body style="margin:0;overflow:hidden;">
-          <img id="remote-desktop" style="width:100%;height:100%;" src="${image.toDataURL()}" />
-          </body></html>`);
-      } else {
-        imageWindow.webContents.executeJavaScript(
-          `document.getElementById('remote-desktop').src = "${image.toDataURL()}";`
-        );
+
+        imageWindow.loadURL('data:text/html,<html><body><canvas id="screen" style="width:100%;height:100%;"></canvas></body></html>');
+
+        imageWindow.webContents.on('did-finish-load', () => {
+          imageWindow.webContents.executeJavaScript(`
+            window.canvas = document.getElementById('screen');
+            window.context = canvas.getContext('2d');
+          `).then(() => {
+            canvasContext = imageWindow.webContents;
+          });
+        });
       }
+
+      imageBuffer = []; 
+    } else if (message.startsWith('lb{0x0008}')) {
+      console.log('Screen sharing ended');
+      mainWindow.webContents.send('tcp-message', 'Screen sharing ended.');
+      if (imageWindow) {
+        imageWindow.close();
+        imageWindow = null;
+      }
+      imageBuffer = [];
     } else {
-      mainWindow.webContents.send('tcp-message', message);
+      imageBuffer.push(message);
+
+      const base64Image = imageBuffer.join('');
+      if (canvasContext) {
+        canvasContext.executeJavaScript(`
+          const img = new Image();
+          img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+          };
+          img.src = 'data:image/jpeg;base64,${base64Image}';
+        `);
+      }
     }
   });
 
@@ -101,7 +130,7 @@ function disconnectFromServer() {
   }
 }
 
-app.on('ready', () => {
+app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
@@ -120,15 +149,12 @@ app.on('ready', () => {
   mainWindow.loadFile('index.html');
 
   ipcMain.on('connect-to-server', (ev, host, port) => {
-    console.log(port);
     connectToServer(host, port);
   });
+
   ipcMain.on('disconnect-from-server', disconnectFromServer);
 
   ipcMain.on('request-file-transfer', (event, { sourcePath, destinationPath }) => {
-    console.log("Received sourcePath: " + sourcePath);
-    console.log("Received destinationPath: " + destinationPath);
-
     if (tcpClient) {
       if (typeof sourcePath === 'string' && typeof destinationPath === 'string') {
         const command = `lb{0x0005} ${sourcePath} ${destinationPath}`;
@@ -152,7 +178,7 @@ app.on('ready', () => {
     }
   });
 
-  ipcMain.on('close-me', (evt, arg) => {
+  ipcMain.on('close-me', () => {
     app.quit();
   });
 

@@ -157,7 +157,7 @@ function updateInfo() {
  * Exploits
  */
 rebootButton.addEventListener('click', () => {
-  window.electron.sendMessage('lb{0x0002}');
+  window.electron.sendMessage('lb{0x0002}\n');
 })
 poweroffButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0003}');

