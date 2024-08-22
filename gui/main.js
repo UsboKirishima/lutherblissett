@@ -5,6 +5,10 @@ const fs = require('fs');
 
 let mainWindow;
 let tcpClient;
+let imageWindow;
+let canvasContext;
+let imageBuffer = [];
+let imageCanvas;
 
 function showNotification(title, body) {
   new Notification({ title, body }).show();
@@ -49,6 +53,62 @@ function connectToServer(host, port) {
     }
   });
 
+  tcpClient.on('data', (data) => {
+    const message = data.toString();
+
+    if (message.startsWith('lb{0x0007}')) {
+      if (!imageWindow) {
+        imageWindow = new BrowserWindow({
+          width: 500,
+          height: 300,
+          autoHideMenuBar: true,
+          frame: true,
+          alwaysOnTop: false,
+          webPreferences: {
+            contextIsolation: false,
+            nodeIntegration: true,
+          }
+        });
+
+        imageWindow.loadURL('data:text/html,<html><body><canvas id="screen" style="width:100%;height:100%;"></canvas></body></html>');
+
+        imageWindow.webContents.on('did-finish-load', () => {
+          imageWindow.webContents.executeJavaScript(`
+            window.canvas = document.getElementById('screen');
+            window.context = canvas.getContext('2d');
+          `).then(() => {
+            canvasContext = imageWindow.webContents;
+          });
+        });
+      }
+
+      imageBuffer = []; 
+    } else if (message.startsWith('lb{0x0008}')) {
+      console.log('Screen sharing ended');
+      mainWindow.webContents.send('tcp-message', 'Screen sharing ended.');
+      if (imageWindow) {
+        imageWindow.close();
+        imageWindow = null;
+      }
+      imageBuffer = [];
+    } else {
+      imageBuffer.push(message);
+
+      const base64Image = imageBuffer.join('');
+      if (canvasContext) {
+        canvasContext.executeJavaScript(`
+          const img = new Image();
+          img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+          };
+          img.src = 'data:image/jpeg;base64,${base64Image}';
+        `);
+      }
+    }
+  });
+
   tcpClient.on('close', () => {
     console.log('TCP connection closed');
     mainWindow.webContents.send('connection-status', 'disconnected');
@@ -70,7 +130,7 @@ function disconnectFromServer() {
   }
 }
 
-app.on('ready', () => {
+app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
@@ -88,18 +148,13 @@ app.on('ready', () => {
 
   mainWindow.loadFile('index.html');
 
-
-
   ipcMain.on('connect-to-server', (ev, host, port) => {
-    console.log(port)
     connectToServer(host, port);
   });
+
   ipcMain.on('disconnect-from-server', disconnectFromServer);
 
   ipcMain.on('request-file-transfer', (event, { sourcePath, destinationPath }) => {
-    console.log("Received sourcePath: " + sourcePath);
-    console.log("Received destinationPath: " + destinationPath);
-
     if (tcpClient) {
       if (typeof sourcePath === 'string' && typeof destinationPath === 'string') {
         const command = `lb{0x0005} ${sourcePath} ${destinationPath}`;
@@ -123,15 +178,13 @@ app.on('ready', () => {
     }
   });
 
-  ipcMain.on('close-me', (evt, arg) => {
-    app.quit()
-  })
+  ipcMain.on('close-me', () => {
+    app.quit();
+  });
 
   ipcMain.on('send-message', (event, message) => {
     if (tcpClient) {
       tcpClient.write(message);
     }
   });
-
-
 });

